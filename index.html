@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Order Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="header">
+        <h1>#CK - Chini Kam Cafe</h1>
+        <nav class="nav">
+            <button id="kitchenBtn" class="nav-btn">Kitchen Dashboard</button>
+            <button id="reportsBtn" class="nav-btn">Reports & Analytics</button>
+            <button id="exportBtn" class="nav-btn">Export Data</button>
+            <button id="menuEditorBtn" class="nav-btn">Menu Editor</button>
+            <button id="tableEditorBtn" class="nav-btn">Table Editor</button>
+            <button id="customersBtn" class="nav-btn">Customer Management</button>
+            <button id="dueExpensesBtn" class="nav-btn">Due Expenses</button>
+            <button id="importExportBtn" class="nav-btn">Import/Export</button>
+        </nav>
+    </header>
+
+    <main>
+        <div id="mainDashboard" class="view">
+            <div class="dashboard-header">
+                <h2>Table Overview</h2>
+                <div class="status-legend">
+                    <div class="status-item">
+                        <div class="status-color status-color--available"></div>
+                        <span>Available</span>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-color status-color--occupied"></div>
+                        <span>Occupied</span>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-color status-color--cleaning"></div>
+                        <span>Needs Cleaning</span>
+                    </div>
+                </div>
+            </div>
+            <div id="tablesGrid" class="tables-grid"></div>
+        </div>
+
+        <div id="kitchenView" class="view hidden">
+            <div class="dashboard-header">
+                <h2>Kitchen Dashboard</h2>
+                <button id="backToDashboard" class="btn btn--secondary">Back to Dashboard</button>
+            </div>
+            <div id="kitchenOrders" class="kitchen-orders"></div>
+        </div>
+
+        <div id="reportsView" class="view hidden">
+            <div class="dashboard-header">
+                <h2>Reports & Analytics</h2>
+                <button id="backToDashboardFromReports" class="btn btn--secondary">Back to Dashboard</button>
+            </div>
+
+            <div class="reports-grid">
+                <div class="report-card">
+                    <h3>Today's Sales</h3>
+                    <div class="report-value">₹<span id="todaysSales">0.00</span></div>
+                </div>
+                <div class="report-card">
+                    <h3>Orders Today</h3>
+                    <div class="report-value" id="ordersToday">0</div>
+                </div>
+                <div class="report-card">
+                    <h3>Average Order Value</h3>
+                    <div class="report-value">₹<span id="averageOrderValue">0.00</span></div>
+                </div>
+            </div>
+
+            <div class="popular-items">
+                <h3>Popular Items Today</h3>
+                <div id="popularItemsList"></div>
+            </div>
+        </div>
+
+        <div id="customersView" class="view hidden">
+            <div class="dashboard-header">
+                <h2>Customer Management</h2>
+                <button id="backToDashboardFromCustomers" class="btn btn--secondary">Back to Dashboard</button>
+            </div>
+
+            <div class="customers-stats">
+                <div class="stat-card">
+                    <h3>Total Customers</h3>
+                    <div class="stat-value" id="totalCustomers">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Due Amount</h3>
+                    <div class="stat-value">₹<span id="totalDueAmount">0.00</span></div>
+                </div>
+            </div>
+
+            <div id="customersList" class="customers-list"></div>
+        </div>
+
+        <div id="dueExpensesView" class="view hidden">
+            <div class="dashboard-header">
+                <h2>Due Expenses Management</h2>
+                <button id="backToDashboardFromDueExpenses" class="btn btn--secondary">Back to Dashboard</button>
+            </div>
+
+            <div class="due-expenses-form">
+                <h3>Add New Due Expense</h3>
+                <div class="form-group">
+                    <label for="expenseCustomer">Customer:</label>
+                    <select id="expenseCustomer" class="form-control">
+                        <option value="">Select Customer</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="expenseAmount">Amount (₹):</label>
+                    <input type="number" id="expenseAmount" class="form-control" step="0.01" min="0">
+                </div>
+                <div class="form-group">
+                    <label for="expenseDescription">Description:</label>
+                    <textarea id="expenseDescription" class="form-control" rows="3"></textarea>
+                </div>
+                <button id="addDueExpense" class="btn btn--primary">Add Due Expense</button>
+            </div>
+
+            <div id="dueExpensesSummary" class="expenses-summary"></div>
+            <div id="dueExpensesList" class="due-expenses-list"></div>
+        </div>
+
+        <div id="menuEditorView" class="view hidden">
+            <div class="dashboard-header">
+                <h2>Menu Editor</h2>
+                <button id="backToDashboardFromMenu" class="btn btn--secondary">Back to Dashboard</button>
+            </div>
+
+            <button id="addMenuItem" class="btn btn--primary">Add New Menu Item</button>
+            <div id="menuEditorList" class="menu-editor-list"></div>
+        </div>
+
+        <div id="tableEditorView" class="view hidden">
+            <div class="dashboard-header">
+                <h2>Table Editor</h2>
+                <button id="backToDashboardFromTables" class="btn btn--secondary">Back to Dashboard</button>
+            </div>
+
+            <button id="addTable" class="btn btn--primary">Add New Table</button>
+            <div id="tableEditorList" class="table-editor-list"></div>
+        </div>
+    </main>
+
+    <div id="tableModal" class="modal hidden">
+        <div class="modal-content" style="width: 1200px; max-width: 90vw;">
+            <div class="modal-header">
+                <h3 id="tableModalTitle">Table Management</h3>
+                <button id="closeTableModal" class="btn btn--close">×</button>
+            </div>
+
+            <div class="modal-body modal-body--order-taking">
+
+                <div class="order-taking-main">
+                    <div class="customer-section">
+                        <h4>Customer Information</h4>
+                        <div class="form-group">
+                            <label>Customer Type:</label>
+                            <div class="radio-group">
+                                <label>
+                                    <input type="radio" name="customerType" value="individual" checked>
+                                    <span>Individual Customer</span>
+                                </label>
+                                <label>
+                                    <input type="radio" name="customerType" value="group">
+                                    <span>Group</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="existingCustomer">Select Existing Customer:</label>
+                            <select id="existingCustomer" class="form-control">
+                                <option value="">New Customer</option>
+                            </select>
+                        </div>
+
+                        <div class="individual-form">
+                            <div class="form-group">
+                                <label for="customerName">Customer Name:</label>
+                                <input type="text" id="customerName" class="form-control"
+                                    placeholder="Enter customer name">
+                            </div>
+                            <div class="form-group">
+                                <label for="customerPhone">Phone Number:</label>
+                                <input type="tel" id="customerPhone" class="form-control"
+                                    placeholder="Enter phone number">
+                            </div>
+                        </div>
+
+                        <div id="groupForm" class="hidden">
+                            <div class="form-group">
+                                <label for="groupName">Group Name:</label>
+                                <input type="text" id="groupName" class="form-control" placeholder="Enter group name">
+                            </div>
+                            <div class="form-group">
+                                <label for="customerCount">Number of Customers:</label>
+                                <div class="customer-count-controls">
+                                    <input type="number" id="customerCount" class="form-control" min="2" max="20"
+                                        value="2">
+                                    <button id="updateCustomerCount" class="btn btn--primary">Update</button>
+                                </div>
+                            </div>
+                        </div>
+                        <button id="saveCustomer" class="btn btn--primary">Save Customer</button>
+                    </div>
+
+                    <div class="order-section">
+                        <div class="cart-header">
+                            <h4>Current Order</h4>
+                            <div id="currentOrderTabs" class="order-tabs"></div>
+                        </div>
+
+                        <div class="cart-container">
+                            <div id="currentOrderList" class="cart-items"></div>
+
+                            <div class="cart-summary">
+                                <div class="summary-row">
+                                    <span>Subtotal:</span>
+                                    <span class="amount">₹<span id="orderSubtotal">0.00</span></span>
+                                </div>
+                                <div class="summary-row">
+                                    <span>Tax (8%):</span>
+                                    <span class="amount">₹<span id="orderTax">0.00</span></span>
+                                </div>
+                                <div class="summary-row total-row">
+                                    <span>Total:</span>
+                                    <span class="amount">₹<span id="orderTotal">0.00</span></span>
+                                </div>
+                            </div>
+
+                            <div class="cart-actions">
+                                <button id="clearCart" class="btn btn--outline">Clear Cart</button>
+                                <button id="splitBillBtn" class="btn btn--secondary">Split Bill</button>
+                                <button id="processPaymentBtn" class="btn btn--primary">Process Payment</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-actions">
+                        <button id="markCleaningBtn" class="btn btn--warning">Mark for Cleaning</button>
+                        <button id="clearTableBtn" class="btn btn--outline">Clear Table</button>
+                    </div>
+                </div>
+
+                <div class="order-taking-sidebar">
+                    <div class="menu-section">
+                        <div class="menu-header">
+                            <h4>Menu</h4>
+                            <div class="menu-controls">
+                                <input type="text" id="menuSearch" placeholder="Search menu items..."
+                                    class="form-control">
+                                <select id="categoryFilter" class="form-control">
+                                    <option value="">All Categories</option>
+                                    <option value="Appetizers">Appetizers</option>
+                                    <option value="Main Course">Main Course</option>
+                                    <option value="Beverages">Beverages</option>
+                                    <option value="Desserts">Desserts</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="menuList" class="menu-list"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="tableCustomersModal" class="modal hidden">
+        <div class="modal-content" style="width: 1200px; max-width: 90vw;">
+            <div class="modal-header">
+                <h2 id="tableCustomersTitle">Table Management</h2>
+                <button id="closeTableCustomersModal" class="btn btn--close">&times;</button>
+            </div>
+            <div class="modal-body modal-body--table-management">
+
+                <div class="table-management-container">
+
+                    <div class="table-management-main">
+                        <div class="table-actions-header">
+                            <h3>Customer Orders</h3>
+                            <button id="addNewCustomerToTableBtn" class="btn btn--primary btn--sm">+ Add
+                                Customer</button>
+                        </div>
+
+                        <div class="customer-carousel">
+                            <button id="prevCustomerBtn" class="carousel-arrow prev"
+                                title="Previous Customer">&#8249;</button>
+                            <div id="customerCarouselWrapper" class="customer-carousel-wrapper">
+                                <div id="tableCustomersList" class="table-customers-list">
+                                </div>
+                            </div>
+                            <button id="nextCustomerBtn" class="carousel-arrow next"
+                                title="Next Customer">&#8250;</button>
+                        </div>
+
+                        <div id="tableSummaryFooter" class="table-summary-footer collapsed">
+                            <div id="summaryHeader" class="summary-header">
+                                <h4>Table Summary</h4>
+                                <div class="summary-preview">
+                                    <span>Total: <strong>₹<span id="tableTotalPreview">0.00</span></strong></span>
+                                    <span>Remaining: <strong>₹<span
+                                                id="tableRemainingPreview">0.00</span></strong></span>
+                                </div>
+                                <span class="summary-toggle-icon">&#9660;</span>
+                            </div>
+
+                            <div class="summary-content">
+                                <div class="payment-summary-row">
+                                    <span>Total Bill:</span>
+                                    <strong>₹<span id="tableTotal">0.00</span></strong>
+                                </div>
+                                <div class="payment-summary-row">
+                                    <span>Total Paid:</span>
+                                    <strong>₹<span id="tablePaid">0.00</span></strong>
+                                </div>
+                                <div class="payment-summary-row">
+                                    <span>Remaining:</span>
+                                    <strong>₹<span id="tableRemaining">0.00</span></strong>
+                                </div>
+                                <button id="resetTableStatus" class="btn btn--primary" disabled>All customers must
+                                    pay first</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-management-sidebar">
+                        <div class="menu-section">
+                            <div class="menu-header">
+                                <h4>Menu</h4>
+                                <div class="menu-controls">
+                                    <input type="text" id="menuSearchMgmt" class="form-control"
+                                        placeholder="Search menu items...">
+                                    <select id="categoryFilterMgmt" class="form-control">
+                                        <option value="">All Categories</option>
+                                        <option value="Appetizers">Appetizers</option>
+                                        <option value="Main Course">Main Course</option>
+                                        <option value="Beverages">Beverages</option>
+                                        <option value="Desserts">Desserts</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="menuListMgmt" class="menu-list">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="addCustomerToTableModal" class="modal hidden">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3>Add Customer to Table</h3>
+                <button id="closeAddCustomerModal" class="btn btn--close">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="existingCustomerSelect">Choose Existing Customer:</label>
+                    <select id="existingCustomerSelect" class="form-control">
+                        <option value="">-- Or Add New Below --</option>
+                    </select>
+                </div>
+                <hr style="margin: 1.5rem 0;">
+                <div class="form-group">
+                    <label for="newCustomerName">New Customer Name:</label>
+                    <input type="text" id="newCustomerName" class="form-control" placeholder="e.g., Anita">
+                </div>
+                <div class="form-group">
+                    <label for="newCustomerPhone">Phone Number (Optional):</label>
+                    <input type="tel" id="newCustomerPhone" class="form-control" placeholder="Phone number">
+                </div>
+                <button id="confirmAddCustomerBtn" class="btn btn--primary">Add Customer</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="paymentModal" class="modal hidden">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3>Process Payment</h3>
+                <button id="closePaymentModal" class="btn btn--close">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="paymentMethod">Payment Method:</label>
+                    <select id="paymentMethod" class="form-control">
+                        <option value="Cash">Cash</option>
+                        <option value="Credit Card">Credit Card</option>
+                        <option value="UPI">UPI</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="paidAmount">Amount Received:</label>
+                    <input type="number" id="paidAmount" class="form-control" step="0.01" min="0">
+                </div>
+                <div class="cart-summary">
+                    <div class="summary-row">
+                        <span>Total Bill:</span>
+                        <span class="amount">₹<span id="paymentTotal">0.00</span></span>
+                    </div>
+                    <div class="summary-row total-row">
+                        <span>Change Due:</span>
+                        <span class="amount">₹<span id="totalChange">0.00</span></span>
+                    </div>
+                </div>
+                <button id="confirmPayment" class="btn btn--primary">Confirm Payment</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="billSplitModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Split Bill</h3>
+                <button id="closeBillSplitModal" class="btn btn--close">×</button>
+            </div>
+
+            <div class="modal-body">
+                <div class="split-options">
+                    <label>
+                        <input type="radio" name="splitType" value="equal" checked>
+                        <span>Split Equally</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="splitType" value="items">
+                        <span>Split by Items</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="splitType" value="custom">
+                        <span>Custom Split</span>
+                    </label>
+                </div>
+
+                <div id="splitDetails" class="split-details"></div>
+
+                <button id="applySplit" class="btn btn--primary">Apply Split</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="exportModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Export Data</h3>
+                <button id="closeExportModal" class="btn btn--close">×</button>
+            </div>
+
+            <div class="modal-body">
+                <div class="export-options">
+                    <h4>Select Data to Export:</h4>
+                    <label>
+                        <input type="checkbox" value="sales">
+                        <span>Daily Sales Report</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" value="orders">
+                        <span>Order History</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" value="menu">
+                        <span>Menu Data</span>
+                    </label>
+                </div>
+
+                <div class="date-range">
+                    <div class="form-group">
+                        <label for="exportFromDate">From:</label>
+                        <input type="date" id="exportFromDate" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="exportToDate">To:</label>
+                        <input type="date" id="exportToDate" class="form-control">
+                    </div>
+                </div>
+
+                <button id="exportData" class="btn btn--primary">Export to CSV</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="importExportModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Import/Export Data</h3>
+                <button id="closeImportExportModal" class="btn btn--close">×</button>
+            </div>
+
+            <div class="modal-body">
+                <div class="import-export-section">
+                    <h4>Import Data</h4>
+                    <div class="form-group">
+                        <label for="importFile">Select JSON File:</label>
+                        <input type="file" id="importFile" class="form-control" accept=".json">
+                    </div>
+                    <button id="importJsonData" class="btn btn--primary">Import Selected File</button>
+                </div>
+
+                <hr>
+
+                <div class="import-export-section">
+                    <h4>Export Data</h4>
+                    <button id="exportJsonData" class="btn btn--secondary">Export as JSON</button>
+                    <button id="exportCsvData" class="btn btn--secondary">Export as Excel (CSV)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="menuEditorModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Menu Editor</h3>
+                <button id="closeMenuEditorModal" class="btn btn--close">×</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="tableEditorModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Table Editor</h3>
+                <button id="closeTableEditorModal" class="btn btn--close">×</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

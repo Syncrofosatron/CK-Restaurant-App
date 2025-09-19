@@ -1,0 +1,1739 @@
+/* Enhanced Restaurant Order Management System Styles */
+
+/* Base styles and variables */
+:root {
+    --primary-color: #2563eb;
+    --primary-hover: #1d4ed8;
+    --secondary-color: #64748b;
+    --success-color: #059669;
+    --warning-color: #d97706;
+    --danger-color: #dc2626;
+    --background-color: #f8fafc;
+    --surface-color: #ffffff;
+    --border-color: #e2e8f0;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --text-muted: #94a3b8;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --border-radius: 8px;
+    --border-radius-sm: 6px;
+    --border-radius-lg: 12px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+.header {
+    background: var(--surface-color);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 0;
+    box-shadow: var(--shadow-sm);
+}
+
+.header h1 {
+    text-align: center;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.nav {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.nav-btn {
+    padding: 0.5rem 1rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.nav-btn:hover {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+/* Main layout */
+main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.view {
+    display: block;
+}
+
+.view.hidden {
+    display: none;
+}
+
+/* Dashboard styles */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.status-legend {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.status-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.status-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+}
+
+.status-color--available {
+    background-color: var(--success-color);
+}
+
+.status-color--occupied {
+    background-color: var(--warning-color);
+}
+
+.status-color--cleaning {
+    background-color: var(--danger-color);
+}
+
+/* Tables grid */
+.tables-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.table-card {
+    background: var(--surface-color);
+    border: 2px solid transparent;
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
+}
+
+.table-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.table-card--available::before {
+    background-color: var(--success-color);
+}
+
+.table-card--occupied::before {
+    background-color: var(--warning-color);
+}
+
+.table-card--cleaning::before {
+    background-color: var(--danger-color);
+}
+
+.table-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.table-card--available:hover {
+    border-color: var(--success-color);
+}
+
+.table-card--occupied:hover {
+    border-color: var(--warning-color);
+}
+
+.table-card--cleaning:hover {
+    border-color: var(--danger-color);
+}
+
+.table-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.table-card__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.table-card__status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.table-card__status--available {
+    background-color: rgb(34 197 94 / 0.1);
+    color: var(--success-color);
+}
+
+.table-card__status--occupied {
+    background-color: rgb(217 119 6 / 0.1);
+    color: var(--warning-color);
+}
+
+.table-card__status--cleaning {
+    background-color: rgb(220 38 38 / 0.1);
+    color: var(--danger-color);
+}
+
+.table-card__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.table-card__capacity,
+.table-card__customers,
+.table-card__time,
+.table-card__total {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.table-card__total {
+    font-weight: 600;
+    color: var(--primary-color);
+    font-size: 1rem;
+}
+
+/* Modal styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    background: var(--surface-color);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--background-color);
+}
+
+.modal-header h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.modal-body {
+    padding: 1.5rem;
+    overflow-y: auto;
+    flex: 1;
+}
+
+/* Enhanced Cart Styles */
+.cart-container {
+    background: var(--background-color);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
+.cart-items {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem;
+    background: var(--surface-color);
+    border-radius: var(--border-radius-sm);
+    margin-bottom: 0.5rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.cart-item__info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.cart-item__name {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.cart-item__price {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.cart-item__controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.quantity-btn {
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--border-color);
+    background: var(--surface-color);
+    border-radius: var(--border-radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.quantity-btn:hover {
+    background: var(--background-color);
+    border-color: var(--primary-color);
+}
+
+.quantity-btn--minus {
+    color: var(--danger-color);
+}
+
+.quantity-btn--plus {
+    color: var(--success-color);
+}
+
+.quantity-display {
+    min-width: 40px;
+    text-align: center;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.item-total {
+    min-width: 80px;
+    text-align: right;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.remove-btn {
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--danger-color);
+    background: var(--surface-color);
+    color: var(--danger-color);
+    border-radius: var(--border-radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.2s;
+}
+
+.remove-btn:hover {
+    background: var(--danger-color);
+    color: white;
+}
+
+.cart-summary {
+    border-top: 1px solid var(--border-color);
+    padding-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.summary-row.total-row {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    border-top: 1px solid var(--border-color);
+    padding-top: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.cart-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+/* Table Customers Modal Styles */
+.table-customers-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.table-customer-card {
+    background: var(--background-color);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+}
+
+.customer-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.customer-card-header h4 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.payment-status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.payment-status.paid {
+    background-color: rgb(34 197 94 / 0.1);
+    color: var(--success-color);
+}
+
+.payment-status.unpaid {
+    background-color: rgb(220 38 38 / 0.1);
+    color: var(--danger-color);
+}
+
+.customer-orders {
+    margin-bottom: 1rem;
+}
+
+.order-item-summary {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.order-item-summary:last-child {
+    border-bottom: none;
+}
+
+.customer-total {
+    background: var(--surface-color);
+    padding: 0.75rem;
+    border-radius: var(--border-radius-sm);
+    margin-bottom: 1rem;
+}
+
+.total-line {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.25rem;
+}
+
+.total-line.grand-total {
+    font-weight: 700;
+    color: var(--primary-color);
+    border-top: 1px solid var(--border-color);
+    padding-top: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.customer-payment-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.table-payment-summary {
+    background: var(--background-color);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--border-color);
+}
+
+.payment-summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.payment-summary-row:last-child {
+    margin-bottom: 0;
+}
+
+.table-payment-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+/* Form styles */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    font-size: 1rem;
+    background: var(--surface-color);
+    transition: all 0.2s;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgb(37 99 235 / 0.1);
+}
+
+.radio-group {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-weight: normal;
+}
+
+.customer-count-controls {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.customer-count-controls input {
+    flex: 1;
+}
+
+/* Button styles */
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    min-width: fit-content;
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn--primary {
+    background: var(--primary-color);
+    color: white;
+}
+
+.btn--primary:hover:not(:disabled) {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn--secondary {
+    background: var(--secondary-color);
+    color: white;
+}
+
+.btn--secondary:hover:not(:disabled) {
+    background: #475569;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn--outline {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.btn--outline:hover:not(:disabled) {
+    background: var(--background-color);
+    border-color: var(--secondary-color);
+    color: var(--text-primary);
+}
+
+.btn--warning {
+    background: var(--warning-color);
+    color: white;
+}
+
+.btn--warning:hover:not(:disabled) {
+    background: #b45309;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn--sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+}
+
+.btn--close {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    font-size: 1.25rem;
+    line-height: 1;
+}
+
+.btn--close:hover {
+    background: var(--background-color);
+    color: var(--danger-color);
+    border-color: var(--danger-color);
+}
+
+/* Menu styles */
+.menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    gap: 1rem;
+}
+
+.menu-controls {
+    display: flex;
+    gap: 0.5rem;
+    flex: 1;
+    max-width: 400px;
+}
+
+.menu-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+.menu-item {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    transition: all 0.2s;
+}
+
+.menu-item:hover {
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-sm);
+}
+
+.menu-item__info {
+    flex: 1;
+}
+
+.menu-item__name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.menu-item__description {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+
+.menu-item__price {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.menu-item__add {
+    padding: 0.5rem 1rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.menu-item__add:hover {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+/* Order tabs */
+.order-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.order-tab {
+    padding: 0.5rem 1rem;
+    background: var(--background-color);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.order-tab.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.order-tab:hover:not(.active) {
+    background: var(--surface-color);
+    border-color: var(--secondary-color);
+}
+
+/* Reports grid */
+.reports-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.report-card {
+    background: var(--surface-color);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+}
+
+.report-card h3 {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.report-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+/* Customer management */
+.customers-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: var(--surface-color);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+}
+
+.stat-card h3 {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.customers-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1rem;
+}
+
+.customer-card {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s;
+}
+
+.customer-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+}
+
+.customer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.customer-header h4 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.customer-type {
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.customer-type.individual {
+    background-color: rgb(59 130 246 / 0.1);
+    color: var(--primary-color);
+}
+
+.customer-type.group {
+    background-color: rgb(139 69 19 / 0.1);
+    color: #a16207;
+}
+
+.customer-details {
+    margin-bottom: 1rem;
+}
+
+.customer-details p {
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.due-amount {
+    font-weight: 600;
+}
+
+.due-amount.positive {
+    color: var(--danger-color);
+}
+
+.due-amount.negative {
+    color: var(--success-color);
+}
+
+.customer-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+/* Due expenses */
+.due-expenses-form {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.due-expenses-form h3 {
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.expenses-summary {
+    display: flex;
+    gap: 2rem;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.summary-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.summary-item span {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.25rem;
+}
+
+.summary-item strong {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.due-expenses-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1rem;
+}
+
+.due-expense-card {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s;
+}
+
+.due-expense-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+}
+
+.expense-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.expense-header h4 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.expense-amount {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--danger-color);
+}
+
+.expense-details {
+    margin-bottom: 1rem;
+}
+
+.expense-details p {
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.expense-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+/* Kitchen orders */
+.kitchen-orders {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+.kitchen-order {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.kitchen-order__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.kitchen-order__header h4 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.kitchen-order__time {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--warning-color);
+    background: rgb(217 119 6 / 0.1);
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--border-radius-sm);
+}
+
+.kitchen-order__items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.kitchen-order__item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background: var(--background-color);
+    border-radius: var(--border-radius-sm);
+}
+
+.item-quantity {
+    font-weight: 600;
+    color: var(--primary-color);
+    min-width: 40px;
+}
+
+.item-name {
+    color: var(--text-primary);
+}
+
+/* Utility classes */
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+.empty-order {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-muted);
+    font-style: italic;
+    background: var(--background-color);
+    border-radius: var(--border-radius-sm);
+}
+
+.hidden {
+    display: none !important;
+}
+
+.amount {
+    font-weight: 600;
+}
+
+.amount.positive {
+    color: var(--success-color);
+}
+
+.amount.negative {
+    color: var(--danger-color);
+}
+
+/* Tables for data display */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--surface-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.data-table th,
+.data-table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.data-table th {
+    background: var(--background-color);
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+}
+
+.data-table tr:hover {
+    background: var(--background-color);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .nav {
+        gap: 0.25rem;
+    }
+
+    .nav-btn {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.8rem;
+    }
+
+    .dashboard-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .status-legend {
+        justify-content: center;
+    }
+
+    .tables-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-content {
+        max-width: 95vw;
+        max-height: 95vh;
+    }
+
+    .modal-body {
+        padding: 1rem;
+    }
+
+    .menu-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .menu-controls {
+        max-width: none;
+    }
+
+    .menu-list {
+        grid-template-columns: 1fr;
+    }
+
+    .cart-item {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+
+    .cart-item__controls {
+        justify-content: space-between;
+    }
+
+    .reports-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .customers-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .customers-list {
+        grid-template-columns: 1fr;
+    }
+
+    .due-expenses-list {
+        grid-template-columns: 1fr;
+    }
+
+    .kitchen-orders {
+        grid-template-columns: 1fr;
+    }
+
+    .expenses-summary {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .table-payment-actions {
+        flex-direction: column;
+    }
+
+    .customer-payment-actions {
+        justify-content: stretch;
+    }
+
+    .cart-actions {
+        justify-content: stretch;
+    }
+}
+
+@media (max-width: 480px) {
+    main {
+        padding: 1rem 0.5rem;
+    }
+
+    .table-card {
+        padding: 1rem;
+    }
+
+    .modal-header {
+        padding: 1rem;
+    }
+
+    .modal-body {
+        padding: 0.75rem;
+    }
+
+    .btn {
+        padding: 0.625rem 1.25rem;
+        font-size: 0.875rem;
+    }
+
+    .btn--sm {
+        padding: 0.375rem 0.75rem;
+        font-size: 0.8rem;
+    }
+}
+
+/* Print styles */
+@media print {
+
+    .header,
+    .nav,
+    .btn,
+    .modal {
+        display: none !important;
+    }
+
+    body {
+        background: white;
+        color: black;
+    }
+
+    .table-card {
+        border: 1px solid black;
+        margin-bottom: 1rem;
+        break-inside: avoid;
+    }
+}
+
+/* Focus styles for accessibility */
+.btn:focus,
+.form-control:focus,
+.order-tab:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Animation for loading states */
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.loading {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Additional enhancements for cart functionality */
+.cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.cart-badge {
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.section-divider {
+    border-top: 1px solid var(--border-color);
+    margin: 1.5rem 0;
+    padding-top: 1.5rem;
+}
+
+/* Enhanced responsive grid system */
+.responsive-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.responsive-grid--small {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.responsive-grid--large {
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+}
+
+/*
+==============================================
+Enhanced Table Management Modal Layout
+==============================================
+*/
+
+/* Make the modal body a flex container to hold the two columns */
+.modal-body--table-management {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    /* Prevent the whole modal body from scrolling */
+    padding: 0;
+    /* Remove padding to allow full-height columns */
+}
+
+/* This is the new wrapper we added in index.html */
+.table-management-container {
+    display: flex;
+    flex-grow: 1;
+    /* Allows the container to fill the available space */
+    overflow: hidden;
+    /* Important for child scrolling */
+}
+
+/* --- Left Column: Customer Cards --- */
+.table-management-main {
+    flex: 3;
+    /* Takes up 3 parts of the available space */
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #e0e0e0;
+    overflow: hidden;
+    /* Crucial for child scrolling */
+}
+
+.table-actions-header {
+    padding: 1rem;
+    border-bottom: 1px solid #e0e0e0;
+    flex-shrink: 0;
+    /* Prevent this header from shrinking */
+}
+
+/* This makes ONLY the list of customer cards scrollable */
+.table-customers-list {
+    flex-grow: 1;
+    /* Takes up available vertical space */
+    overflow-y: auto;
+    /* Adds a scrollbar only when needed */
+    padding: 1rem;
+}
+
+.table-summary-footer {
+    padding: 1rem;
+    border-top: 1px solid #e0e0e0;
+    background-color: #f9f9f9;
+    flex-shrink: 0;
+    /* Prevent the footer from shrinking */
+}
+
+/* --- Right Column: Menu --- */
+.table-management-sidebar {
+    flex: 2;
+    /* Takes up 2 parts of the space (you can adjust this ratio) */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    /* Crucial for child scrolling */
+}
+
+.menu-section {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    /* Ensure it fills the sidebar */
+}
+
+/* The h3 and filters container inside the menu */
+.menu-section h3,
+.menu-filters {
+    padding: 1rem 1rem 0 1rem;
+    flex-shrink: 0;
+    /* Prevent header and filters from shrinking */
+}
+
+/* This makes ONLY the list of menu items scrollable */
+.menu-list {
+    flex-grow: 1;
+    /* Takes up all available vertical space */
+    overflow-y: auto;
+    /* Adds a scrollbar only when needed */
+    padding: 1rem;
+}
+
+/*
+==============================================
+Customer Carousel Layout
+==============================================
+*/
+
+.customer-carousel {
+    flex-grow: 1;
+    display: flex;
+    position: relative;
+    align-items: center;
+    padding: 0 2.5rem;
+    /* Space for arrows */
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.customer-carousel-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e0e0e0;
+    flex-shrink: 0;
+}
+
+.carousel-counter {
+    background-color: #e9ecef;
+    padding: 0.2rem 0.6rem;
+    border-radius: 1rem;
+    font-size: 0.8em;
+    font-weight: 600;
+    color: #495057;
+}
+
+.customer-carousel-wrapper {
+    width: 100%;
+    overflow: hidden;
+    /* This is crucial, it hides the other cards */
+    flex-grow: 1;
+    display: flex;
+    align-items: flex-start;
+    /* Align cards to the top */
+}
+
+/* This is the container that slides */
+#tableCustomersList.table-customers-list {
+    display: flex;
+    height: 100%;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Overriding previous styles to make it horizontal */
+.table-customers-list {
+    overflow-y: visible;
+    /* Disable vertical scroll */
+    flex-direction: row;
+    /* Make cards line up horizontally */
+}
+
+/* Each customer card takes up the full width of the wrapper */
+.table-customer-card {
+    min-width: 100%;
+    flex: 0 0 100%;
+    /* Don't shrink, don't grow, be 100% wide */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Make the order list within the card scrollable */
+.customer-orders-editable {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 0.5rem 1rem;
+}
+
+
+/* Styling for the navigation arrows */
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    line-height: 38px;
+    text-align: center;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.carousel-arrow.prev {
+    left: -5px;
+}
+
+.carousel-arrow.next {
+    right: -5px;
+}
+
+.carousel-arrow:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+/*
+==============================================
+Collapsible Table Summary Footer
+==============================================
+*/
+.table-summary-footer {
+    padding: 0;
+    /* Remove padding from the main container */
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+    flex-shrink: 0;
+}
+
+.summary-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.summary-header h4 {
+    margin: 0;
+}
+
+.summary-preview {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.9em;
+    color: #495057;
+}
+
+.summary-toggle-icon {
+    font-size: 0.8em;
+    transition: transform 0.3s ease;
+}
+
+.summary-content {
+    padding: 1rem;
+    border-top: 1px solid #e9ecef;
+    background-color: #fff;
+    max-height: 200px;
+    /* Set a max-height for the animation */
+    transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
+    overflow: hidden;
+}
+
+/* --- Collapsed State --- */
+.table-summary-footer.collapsed .summary-content {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-top: none;
+}
+
+.table-summary-footer.collapsed .summary-toggle-icon {
+    transform: rotate(-90deg);
+}
+
+/*
+==============================================
+Customer Card Footer Actions
+==============================================
+*/
+
+.card-footer-actions {
+    display: flex;
+    gap: 0.5rem;
+    /* Adds a small space between the buttons */
+    margin-top: 0.75rem;
+    align-items: center;
+}
+
+/* Make the "Add Item" button take up the available space */
+.card-footer-actions .btn--full {
+    flex-grow: 1;
+}
+
+/* Give the "Mark as Paid" button a fixed width */
+.card-footer-actions .btn--secondary,
+.card-footer-actions .btn--outline {
+    flex-shrink: 0;
+    min-width: 110px;
+    /* Adjust as needed */
+}
+
+/*
+==============================================
+Available Table (Order Taking) Modal Layout
+==============================================
+*/
+
+/* This will be the main flex container for our two columns.
+   You will need to add the "modal-body--order-taking" class
+   to the modal-body div in your HTML file. */
+.modal-body--order-taking {
+    display: flex;
+    gap: 1.5rem;
+    /* Space between the two columns */
+    padding: 1rem;
+    overflow: hidden;
+    /* Prevents the whole modal from scrolling */
+}
+
+/* --- Left Column: Customer Info & Cart --- */
+.order-taking-main {
+    flex: 3;
+    /* Takes up 3 parts of the space (e.g., 60%) */
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    /* Allows this column to scroll if needed */
+    padding-right: 1rem;
+    /* A little space before the scrollbar */
+}
+
+/* --- Right Column: Menu --- */
+.order-taking-sidebar {
+    flex: 2;
+    /* Takes up 2 parts of the space (e.g., 40%) */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    /* This column itself won't scroll... */
+}
+
+/* ...because we want the menu list inside it to scroll. */
+.order-taking-sidebar .menu-section {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.order-taking-sidebar .menu-list {
+    flex-grow: 1;
+    overflow-y: auto;
+}
