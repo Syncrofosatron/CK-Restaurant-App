@@ -2674,7 +2674,12 @@ class RestaurantPOS {
       (total, order) => total + order.total,
       0
     );
-    const ordersToday = todayOrders.length;
+
+    // **FIXED: This now correctly counts customers in group orders**
+    const ordersToday = todayOrders.reduce((total, order) => {
+      return total + (order.customerCount || 1);
+    }, 0);
+    
     const averageOrderValue = ordersToday > 0 ? todaysSales / ordersToday : 0;
 
     const todaysSalesEl = document.getElementById("todaysSales");
